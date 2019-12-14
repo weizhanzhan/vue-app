@@ -1,43 +1,62 @@
 <template>
-  <div style="position:relative;height:100%">
-    <van-nav-bar
-      title="标题"
-      left-text="返回"
-
-      left-arrow
-      @click-left="onClickLeft"
-    />
-    <div class="container">
-      <ul>
-        <li
-          v-for="item in repos"
-          :key="item.name"
-          class="repos_item"
-          @click="$router.push({path:'/github/repos/'+item.id,query:item})"
-        >
-          <div class="head">
+  <container
+    title="Repos"
+    @back="onClickLeft"
+  >
+    <template v-if="loading">
+      <van-skeleton
+        title
+        :row="3"
+      />
+      <van-skeleton
+        title
+        :row="3"
+      />
+      <van-skeleton
+        title
+        :row="3"
+      />
+      <van-skeleton
+        title
+        :row="3"
+      />
+      <van-skeleton
+        title
+        :row="3"
+      />
+    </template>
+    <ul>
+      <li
+        v-for="item in repos"
+        :key="item.name"
+        class="repos_item"
+        @click="$router.push({path:'/github/repos/'+item.id,query:item})"
+      >
+        <div class="head">
+          <div>
             <div>
-              <div>
-                <img
-                  src="../../../assets/images/avatar.jpg"
-                  alt=""
-                  style="width:20px"
-                >
-                {{ item.owner.login }}
-              </div>
+              <img
+                src="../../../assets/images/avatar.jpg"
+                alt=""
+                style="width:20px"
+              >
+              {{ item.owner.login }}
             </div>
-            <div>{{ item.language }}</div>
           </div>
-          <div class="repos_name">
-            {{ item.name }}
-          </div>
-          <div class="repos_discription">
-            {{ item.description || '暂无描述信息' }}
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
+          <div>{{ item.language }}</div>
+        </div>
+        <div class="repos_name">
+          {{ item.name }}
+        </div>
+        <div class="repos_discription">
+          {{ item.description || '暂无描述信息' }}
+        </div>
+      </li>
+    </ul>
+
+    <!-- </div>
+  </container> -->
+  </container>
 </template>
 
 <script>
@@ -45,11 +64,14 @@
   export default {
     data() {
       return {
-        repos: []
+        repos: [],
+        loading: false
       }
     },
     mounted() {
+      this.loading = true
       axios.get('https://api.github.com/users/weizhanzhan/repos').then(res => {
+        this.loading = false
         this.repos = res.data
       })
     },
@@ -82,11 +104,11 @@
     color: #bfbfbf;
     font-size: 14px
 }
-.container{
+/* .container{
     position: absolute;
     top: 50px;
     bottom: 0;
     width: 100%;
     overflow: auto
-}
+} */
 </style>

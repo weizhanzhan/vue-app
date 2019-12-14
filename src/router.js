@@ -6,8 +6,29 @@ const router = new VueRouter({
     routes: [
         {
             path: '/',
-            component: () => import('./views/home')
+            name: 'layout',
+            redirect: '/home',
+            component: () => import('./components/Layout.vue'),
+            children: [
+                {
+                    path: '/home',
+                    name: 'home',
+                    component: () => import('./views/home'),
+                    meta: {
+                        noTransition: true
+                    }
+                },
+                {
+                    path: '/account',
+                    name: 'account',
+                    component: () => import('./views/account'),
+                    meta: {
+                        noTransition: true
+                    }
+                }
+            ]
         },
+
         {
             path: '/github',
             component: () => import('./views/github/repos')
@@ -15,7 +36,12 @@ const router = new VueRouter({
         {
             path: '/github/repos/:id',
             component: () => import('./views/github/repos/details')
+        },
+        {
+            path: '/github/repos/edit/:id',
+            component: () => import('./views/github/repos/edit')
         }
+
     ]
     // mode:'history'
 })

@@ -1,52 +1,54 @@
 <template>
-  <div class="home">
-    <div class="container">
-      <header class="header">
-        <div class="title">
-          Hi，早上好！
-        </div>
-        <div>
-          <van-icon
-            name="location-o"
-            :size="20"
-          />
-          <span style="vertical-align: top;"> 常州市</span>
-        </div>
-      </header>
-      <div class="banner">
-        <img
-          src="../../assets/images/banner1.jpg"
-          alt=""
-          srcset=""
-        >
-      </div>
-      <div class="divider-line" />
-      <div class="application">
-        <div class="title">
-          功能应用
-        </div>
-        <div class="box">
-          <div
-            v-for="item in applications"
-            :key="item.icon"
-            class="item"
-            @click="to(item)"
+  <container nobar>
+    <div class="home">
+      <div class="container">
+        <header class="header">
+          <div class="title">
+            Hi，早上好！
+          </div>
+          <div>
+            <van-icon
+              name="location-o"
+              :size="20"
+            />
+            <span style="vertical-align: top;"> 常州市</span>
+          </div>
+        </header>
+        <div class="banner">
+          <img
+            src="../../assets/images/banner1.jpg"
+            alt=""
+            srcset=""
           >
+        </div>
+        <div class="divider-line" />
+        <div class="application">
+          <div class="title">
+            功能应用
+          </div>
+          <div class="box">
             <div
-              class="icon"
-              :style="{background:item.color}"
+              v-for="item in applications"
+              :key="item.icon"
+              class="item"
+              @click="to(item)"
             >
-              <i :class="['iconfont '+item.icon]" />
-            </div>
-            <div class="label">
-              {{ item.label }}
+              <div
+                class="icon"
+                :style="{background:item.color}"
+              >
+                <i :class="['iconfont '+item.icon]" />
+              </div>
+              <div class="label">
+                {{ item.label }}
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <FooterGuide />
     </div>
-    <FooterGuide />
-  </div>
+  </container>
 </template>
 
 <script>

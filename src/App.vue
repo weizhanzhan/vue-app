@@ -1,89 +1,42 @@
 <template>
   <div id="app">
-    <transition :name="state.direction">
-      <keep-alive>
-        <router-view class="wx_page_body" />
-      </keep-alive>
-    </transition>
-    <!-- <router-view></router-view> -->
+    <!-- <transition :name="transitionName">
+      <vue-page-stack> -->
+    <router-view
+      :key="$route.fullPath"
+      class="router-view-c"
+    />
+    <!-- </vue-page-stack>
+    </transition> -->
   </div>
 </template>
 
 <script>
-  var localSessionRouteStack = sessionStorage.getItem('$$routeStack') || []
-
+  import Apicloud from '@/mixins/apicloud'
   export default {
     name: 'App',
+    mixins: [Apicloud],
     data() {
-      try {
-        localSessionRouteStack = this.$route.path !== '/' ? JSON.parse(localSessionRouteStack) : []
-      } catch (error) {
-        localSessionRouteStack = []
-      }
       return {
-        transitionName: 'slide-right',
-        state: {
-          routeStack: localSessionRouteStack,
-          direction: 'slide-left',
-          pushCount: localSessionRouteStack.length,
-          routeMap: {}
-        }
+        time: 0
+        // transitionName: 'forward'
       }
     },
+    // watch: {
+    //   $route(to, from) {
+    //     if (to.params['stack-key-dir'] === 'forward') {
+    //       this.transitionName = 'forward'
+    //     } else {
+    //       this.transitionName = 'back'
+    //     }
+    //   }
+    // },
     mounted() {
-      this.$router.beforeEach((to, from, next) => {
-        const { routeStack } = this.state
-
-        if (routeStack.length === 0) {
-          this.setRouteDirection({ dir: 'slide-left', to, from })
-          this.addRouteStack(from)
-          this.addRouteStack(to)
-        } else if (routeStack.length === 1) {
-          this.setRouteDirection({ dir: 'slide-left', to, from })
-          this.addRouteStack(to)
-        } else {
-          const lastBeforeRoute = routeStack[routeStack.length - 2]
-          if (lastBeforeRoute.path === to.path) {
-            this.popRouteStack()
-            this.setRouteDirection({ dir: 'slide-right', to, from })
-          } else {
-            this.addRouteStack(to)
-            this.setRouteDirection({ dir: 'slide-left', to, from })
-          }
-        }
-        next()
-      })
+      window.api && this.addRativeListener()
     },
     methods: {
-      setRouteDirection({ dir, to, from }) {
-        this.state.direction = dir
-        this.state.routeMap['to'] = to.path
-        this.state.routeMap['from'] = from.path
-      },
-      addRouteStack(route) {
-        this.state.routeStack.push({
-          path: route.path
-        })
-        this.state.pushCount++
-        sessionStorage.setItem('$$routeStack', JSON.stringify(this.state.routeStack))
-      },
-      popRouteStack() {
-        this.state.routeStack.pop()
-        sessionStorage.setItem('$$routeStack', JSON.stringify(this.state.routeStack))
-      }
-    }
-    // watch: {
-    //   '$route'() {
-    //     const isBack = this.$router.isBack //  监听路由变化时的状态为前进还是后退
-    //     if (isBack) {
-    //       this.transitionName = 'slide-right'
-    //     } else {
-    //       this.transitionName = 'slide-left'
-    //     }
-    //     this.$router.isBack = false
-    //   }
-    // }
 
+    }
   }
 </script>
 
@@ -93,23 +46,28 @@ body,html{
   margin: 0;
   height: 100%;
   width: 100%;
+  background: #ffffff
   /* overflow: hidden; */
 }
 #app{
   font-size: 16px;
-
+  box-sizing: border-box;
   height: 100%;
   width: 100%;
-
+  display: flex;
+  flex-direction: column
 }
-.wx_page_body{
+.app-body{
+  flex: 1
+}
+/* .wx_page_body{
   position: absolute;
     overflow: auto;
     width: 100%;
     background: #ffffff;
     height: 100%;
     transition: all 0.3s
-}
+} */
 
 .slide-left-enter,
 .slide-right-leave-active {
@@ -125,4 +83,20 @@ transform: translate(100%, 0);
 transform: translate(-100% 0);
 }
 
+.router-view-c {
+  position: absolute;
+  transition: opacity 0.5s, transform 0.5s;
+  width: 100%;
+  height: 100%;
+}
+.forward-enter,
+.back-leave-active {
+  opacity: 1;
+  transform: translateX(100%);
+}
+.forward-leave-active,
+.back-enter {
+  opacity: 1;
+  transform: translateX(-100%);
+}
 </style>

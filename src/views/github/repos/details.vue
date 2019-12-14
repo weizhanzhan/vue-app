@@ -1,20 +1,33 @@
 <template>
-  <div>
-    <van-nav-bar
-      title="标题"
-      left-text="返回"
+  <container
+    title="详情"
+    @back="onClickLeft"
+  >
+    <van-cell-group>
+      <van-cell
+        title="id"
+        :value="info.id"
+      />
+      <van-cell
+        title="名称"
+        :value="info.name"
+      />
+      <van-cell
+        title="描述"
+        :label="info.description"
+      />
+    </van-cell-group>
 
-      left-arrow
-      @click-left="onClickLeft"
-    />
-    details
-    <ul>
-      <li>id: {{ info.id }}</li>
-      <li>name:{{ info.name }}</li>
-      <li>desc:{{ info.description }}</li>
-    </ul>
-    {{ info.name }}
-  </div>
+    <div class="submit">
+      <van-button
+        type="primary"
+        size="large"
+        @click="$router.push('/github/repos/edit/'+info.id )"
+      >
+        编辑
+      </van-button>
+    </div>
+  </container>
 </template>
 
 <script>
@@ -25,14 +38,10 @@
       }
     },
     mounted() {
-      console.log(this.$route.query)
       this.info = this.$route.query
     },
     methods: {
       onClickLeft() {
-        this.$router.go(-1)
-      },
-      onClickRight() {
         this.$router.go(-1)
       }
     }
@@ -40,5 +49,7 @@
 </script>
 
 <style scoped>
-
+.submit{
+  margin: 200px 10px 0 10px
+}
 </style>
