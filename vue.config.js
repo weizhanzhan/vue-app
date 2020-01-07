@@ -4,7 +4,7 @@ const path = require('path')
 module.exports = {
   publicPath: './', // 解决打包后空白
   // lintOnSave: false, // 关闭eslint检测
-  outputDir: '../../apicloud/html',
+  // outputDir: '../../apicloud/html',
   configureWebpack: config => {
     if (process.env.NODE_ENV === 'production') {
       // 为生产环境修改配置...
