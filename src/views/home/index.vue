@@ -1,5 +1,8 @@
 <template>
-  <container nobar>
+  <container
+    nobar
+  >
+    <!-- no-status-bar -->
     <div class="home">
       <div class="container">
         <header class="header">
@@ -55,6 +58,7 @@
 
   import FooterGuide from 'components/footer'
   export default {
+    name: 'Page',
     components: { FooterGuide },
     data() {
       return {
@@ -78,6 +82,12 @@
           { icon: 'icon-appstore', label: '更多', color: '#1890ff', path: '#a0d911' }
         ]
       }
+    },
+    activated() {
+      console.log('home页面被缓存')
+    },
+    deactivated() {
+      console.log('home页面消除缓存')
     },
     methods: {
       to(row) {

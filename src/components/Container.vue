@@ -13,7 +13,11 @@
         @click-left="onClickLeft"
       />
     </div>
-    <div class="body">
+    <div
+      ref="body"
+      class="body"
+      @scroll="scroll"
+    >
       <slot />
     </div>
   </div>
@@ -38,7 +42,8 @@
     },
     data() {
       return {
-        statusBarHeight: 0
+        statusBarHeight: 0,
+        scrollTop: 0
       }
     },
     mounted() {
@@ -46,10 +51,17 @@
         this.statusBarHeight = window.api.safeArea.top
       }
     },
+    activated() {
+      // this.$refs.body.scrollTop = this.scrollTop
+    },
     methods: {
       onClickLeft() {
         this.$emit('back')
+      },
+      scroll() {
+        // this.scrollTop = this.$refs.body.scrollTop
       }
+
     }
   }
 </script>
@@ -63,6 +75,7 @@
 .body{
   flex: 1;
   overflow: auto;
-  background: #ffffff
+  background: #ffffff;
+  position: relative;
 }
 </style>

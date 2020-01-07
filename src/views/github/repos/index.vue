@@ -5,54 +5,47 @@
   >
     <template v-if="loading">
       <van-skeleton
+        v-for="n in 6"
+        :key="n"
         title
         :row="3"
-      />
-      <van-skeleton
-        title
-        :row="3"
-      />
-      <van-skeleton
-        title
-        :row="3"
-      />
-      <van-skeleton
-        title
-        :row="3"
-      />
-      <van-skeleton
-        title
-        :row="3"
+        style="margin-top:10px"
       />
     </template>
-    <ul>
-      <li
-        v-for="item in repos"
-        :key="item.name"
-        class="repos_item"
-        @click="$router.push({path:'/github/repos/'+item.id,query:item})"
-      >
-        <div class="head">
-          <div>
-            <div>
-              <img
-                src="../../../assets/images/avatar.jpg"
-                alt=""
-                style="width:20px"
-              >
-              {{ item.owner.login }}
+    <div
+      class="content"
+    >
+      <Scroll>
+        <ul>
+          <li
+            v-for="item in repos"
+            :key="item.name"
+            class="repos_item"
+            @click="$router.push({path:'/github/repos/'+item.id,query:item})"
+          >
+            <div class="head">
+              <div>
+                <div>
+                  <img
+                    src="../../../assets/images/avatar.jpg"
+                    alt=""
+                    style="width:20px"
+                  >
+                  {{ item.owner.login }}
+                </div>
+              </div>
+              <div>{{ item.language }}</div>
             </div>
-          </div>
-          <div>{{ item.language }}</div>
-        </div>
-        <div class="repos_name">
-          {{ item.name }}
-        </div>
-        <div class="repos_discription">
-          {{ item.description || '暂无描述信息' }}
-        </div>
-      </li>
-    </ul>
+            <div class="repos_name">
+              {{ item.name }}
+            </div>
+            <div class="repos_discription">
+              {{ item.description || '暂无描述信息' }}
+            </div>
+          </li>
+        </ul>
+      </Scroll>
+    </div>
 
     <!-- </div>
   </container> -->
@@ -60,8 +53,13 @@
 </template>
 
 <script>
+  import Scroll from '../../../components/Scroll'
   import axios from 'axios'
   export default {
+    name: 'Gitlist',
+    components: {
+      Scroll
+    },
     data() {
       return {
         repos: [],
@@ -74,6 +72,12 @@
         this.loading = false
         this.repos = res.data
       })
+    },
+    activated() {
+      console.log('gitlist页面被缓存')
+    },
+    deactivated() {
+      console.log('gitlist页面被清除缓存')
     },
     methods: {
       onClickLeft() {
@@ -111,4 +115,12 @@
     width: 100%;
     overflow: auto
 } */
+
+.content{
+  position: absolute;
+  /* top: 46px; */
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
 </style>

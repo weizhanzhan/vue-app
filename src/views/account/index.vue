@@ -3,6 +3,7 @@
     nobar
     no-status-bar
   >
+    <!-- no-status-bar -->
     <div class="account">
       <header class="header">
         <div class="avatar">
@@ -64,6 +65,13 @@
           disabled
           @click-right-icon="to('update')"
         />
+        <van-field
+          label="重定向"
+          left-icon="down"
+          right-icon="arrow"
+          disabled
+          @click-right-icon="to('redirect')"
+        />
       </div>
     </div>
     <van-action-sheet
@@ -100,6 +108,9 @@
         switch (type) {
         case 'update':
           window.api && this.checkUpdate()
+          break
+        case 'redirect':
+          window.location.href = 'http://192.168.1.196:8083'
           break
         default:
           console.log('to')
