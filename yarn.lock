@@ -7999,6 +7999,11 @@ vue-loader@^15.7.2:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
+vue-navigation@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/vue-navigation/-/vue-navigation-1.1.4.tgz#be990190624647daa34b8cd525fad4fb6d472542"
+  integrity sha512-flOvttNizFmnAj73hxrvGEMyOrbUiS7omKOTs+My+7wYdDjcW6JB8emGijy26/HyzcuPaiXbaUjZmXKRPFGfow==
+
 vue-page-stack@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/vue-page-stack/-/vue-page-stack-1.4.1.tgz#b6377f00e461bcf2099c2be410b736284b115e8a"
@@ -8034,6 +8039,11 @@ vue@^2.6.10:
   version "2.6.10"
   resolved "https://registry.npm.taobao.org/vue/download/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
   integrity sha1-pysaQqTYKnIepDjRtr9V5mGVxjc=
+
+vuex@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.1.2.tgz#a2863f4005aa73f2587e55c3fadf3f01f69c7d4d"
+  integrity sha512-ha3jNLJqNhhrAemDXcmMJMKf1Zu4sybMPr9KxJIuOpVcsDQlTBYLLladav2U+g1AvdYDG5Gs0xBTb0M5pXXYFQ==
 
 watchpack@^1.6.0:
   version "1.6.0"
